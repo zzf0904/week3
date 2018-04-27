@@ -10,6 +10,11 @@ gulp.task('server', function() {
             port: '8888',
             // 请求拦截
             middleware: function(req, res, next) {
+                if (/\/api/g.test(req.url)) {
+                    res.end(JSON.stringify(
+                        mock(req.url)
+                    ));
+                }
                 next();
             }
         }));

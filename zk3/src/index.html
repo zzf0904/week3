@@ -13,40 +13,135 @@
     <link rel="stylesheet" href="./css/swiper-3.4.2.min.css">
     <script src='./js/lib/jquery-2.1.1.min.js'></script>
     <link rel="stylesheet" href="./css/style.css">
-
+    <script src='./js/lib/handlebars-v4.0.11.js'></script>
 </head>
 
 <body>
     <div class="wrap">
         <header class='header'>
-            <p>
+            <p id='inp'>
                 <i class="icon iconfont icon-sousuo"></i>
                 <input type="text" placeholder='小米MIX 2S'>
             </p>
-            <i class="icon iconfont icon-zanting"></i>
+            <i class="icon iconfont icon-fenlei"></i>
         </header>
         <section class='section'>
-            <div class="section-top">
-                <div class="parent swiper-container">
-                    <ul class="list swiper-wrapper">
-                        <li class="swiper-slide"><img src="./img/1.png" alt=""></li>
-                        <li class="swiper-slide"><img src="./img/1.png" alt=""></li>
-                        <li class="swiper-slide"><img src="./img/1.png" alt=""></li>
-                    </ul>
-                </div>
-            </div>
+            <ul>
+                <li class='bg'>
+                    <!-- 轮播 -->
+                    <div class="section-top">
+                        <div class="parent swiper-container">
+                            <ul class="list swiper-wrapper">
+                                <li class="swiper-slide"><img src="./img/1.png" alt=""></li>
+                                <li class="swiper-slide"><img src="./img/1.png" alt=""></li>
+                                <li class="swiper-slide"><img src="./img/1.png" alt=""></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- 图标导航 -->
+                    <div class="nav">
+                        <dl>
+                            <dt><i class="icon iconfont icon-shouye"></i></dt>
+                            <dd>首页</dd>
+                        </dl>
+                        <dl>
+                            <dt><i class="icon iconfont icon-fenlei"></i></dt>
+                            <dd>分类</dd>
+                        </dl>
+                        <dl>
+                            <dt><i class="icon iconfont icon-sousuo"></i></dt>
+                            <dd>首页</dd>
+                        </dl>
+                        <dl>
+                            <dt><i class="icon iconfont icon-gouwuche"></i></dt>
+                            <dd>购物车</dd>
+                        </dl>
+                    </div>
+                    <div class="center">
+
+                    </div>
+                    <!-- img -->
+                    <div class="img">
+                        <img src="./img/2.png" alt="">
+                    </div>
+                    <!-- 渲染列表 -->
+                    <div class="main">
+                        <ol>
+                            <!-- <li><img src="./img/3.png" alt=""></li> -->
+                        </ol>
+                    </div>
+
+                    <script type='text/x-template-handlebars' id='tpl'>
+                        {{#each this}}
+                        <li><img src="{{img}}" alt=""></li>
+                        {{/each}}
+                    </script>
+                    <script>
+                        var tpl = $('#tpl').html();
+                        var template = Handlebars.compile(tpl);
+                        // var obj = {
+                        //     name: 'aas'
+                        // }
+                        $.ajax({
+                            url: './data/main.json',
+                            success: function(data) {
+                                var html = template(data);
+                                $('.main>ol').append(html);
+                            }
+                        })
+                    </script>
+
+                </li>
+                <li>page2222222222</li>
+                <li>page33333333</li>
+                <li>page4444444</li>
+                <li>page5555555555</li>
+            </ul>
         </section>
         <footer class='footer'>
-
+            <dl class='on'>
+                <dt><i class="icon iconfont icon-shouye"></i></dt>
+                <dd>首页</dd>
+            </dl>
+            <dl>
+                <dt><i class="icon iconfont icon-fenlei"></i></dt>
+                <dd>分类</dd>
+            </dl>
+            <dl>
+                <dt><i class="icon iconfont icon-sousuo"></i></dt>
+                <dd>首页</dd>
+            </dl>
+            <dl>
+                <dt><i class="icon iconfont icon-gouwuche"></i></dt>
+                <dd>购物车</dd>
+            </dl>
+            <dl>
+                <dt><i class="icon iconfont icon-yonghu"></i></dt>
+                <dd>用户</dd>
+            </dl>
         </footer>
     </div>
     <script src='./js/lib/swiper-3.4.2.min.js'></script>
     <script>
+        // 轮播
         new Swiper('.parent', {
             autoplay: 100,
             loop: true
         });
+        // 底部选项卡的切换
+        $('.footer dl').each(function(i, v) {
+            //  console.log(i, v)
+            $(this).on('click', function() {
+                $(this).addClass('on').siblings().removeClass('on');
+                $('section>ul>li').eq($(this).index()).addClass('bg').siblings().removeClass('bg');
+            });
+        });
+        // 	点击搜索框可跳转至搜索页面
+        $('#inp').on('click', function() {
+            location.href = 'search.html'
+        });
     </script>
+
 </body>
 
 </html>
